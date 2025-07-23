@@ -6,11 +6,11 @@
  
  * Se solicito que se deberán diseñar e implementar una base de datos relacional con al menos 5 tablas que cumpla con los siguientes requisitos funcionales:
    
- - Gestion de Productos.
- - Gestion de Clientes.
- - Pedidos.
- - Resenas.
- - Categorias
+   - Gestion de Productos.
+   - Gestion de Clientes.
+   - Pedidos.
+   - Resenas.
+   - Categorias
  
 En mi caso tome la decicion de agregar dos tablas mas las cuales son:
 
