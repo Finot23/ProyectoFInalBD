@@ -5,7 +5,7 @@
 ---
 
 ## 1. Descripción del Problema 
-Se nos pidio la creacion de una tienda online suponiendo que los productos electrónicos necesita un sistema para gestionar sus operaciones incluyendo:
+Se nos pide la creación de una tienda online suponiendo que los productos electrónicos necesita un sistema para gestionar sus operaciones incluyendo:
 - productos.
 - clientes.
 - pedidos (con detalles y estado).
@@ -20,12 +20,12 @@ Se nos pidio la creacion de una tienda online suponiendo que los productos elect
 - **Reseñas:** Calificación (1–5 estrellas), comentario. Solo por clientes que hayan comprado el producto.
 - **Categorías:** Clasificación de productos (ej. teléfonos, laptops, accesorios).
  
-En mi caso tome la decicion de agregar dos tablas mas las cuales son:
+Se decidió agregar dos tablas más:
 
  - **detalle_pedido:** cantidad productos, precio total. 
  - **estado_pedido:** estado (pendiente, enviado, entregado)
    
-Agregue estas dos tablas ya que considero que de esta manera en el Esquema se cumple con la Tercera Forma Normal(3NF).
+Estas tablas adicionales permiten cumplir con la **Tercera Forma Normal (3NF)**
 
 ### Restricciones clave:
 
@@ -41,35 +41,37 @@ Diseñar una **base de datos relacional normalizada**, implementar consultas y a
 
 ## 2. Requisitos del Proyecto:
 
-- Diseñar una base de datos relacional con al menos 5 tablas (Productos, Clientes, Pedidos, Detal1es_Pedido, Reseñas, Categorías).
+- Diseñar una base de datos relacional con al menos 5 tablas (Productos, Clientes, Pedidos, Reseñas, Categorías).
 
-### Entregable: 
+### Entregables: 
 - Diagrama Entidad-Relación (ER) que modele entidades y relaciones.
 - Esquema en tercera forma normal (3NF), con justificación de normalización.
 - Identificación de claves primarias, foráneas y candidatas.
 
-### Analisis realizado para cumplir con los criterios de entrega:
-Para cumplir con el modelo Entidad-Relacion (ER) que modele entidades y relaciones tenemos que tomar en cuenta lo siguiente:
+### Análisis para cumplir los criterios de entrega:
 
- - Entidades: Cada una de las cajas (categoria, productos, clientes, pedidos, detalle_pedido, resenas, estado_pedido) representan una entidad significativa en la tienda.
- - Atributos: Las lineas dentro de cada caja son los atributos de esa entidad.
- - Relaciones: Las lineas que conectan las cajas representan las relaciones entre las entidades.
- - Cardinalidad: Los simbolos en los extremos de las lineas (1, N) indican la cardinalidad de esas relaciones.
+Para cumplir con el modelo Entidad-Relación (ER) tenemos que tomar en cuenta lo siguiente:
+
+- **Entidades**: cajas (categoria, productos, clientes, pedidos, detalle_pedido, reseñas, estado_pedido).
+- **Atributos**: cada campo de las tablas.
+- **Relaciones**: líneas entre entidades.
+- **Cardinalidad**: indicación 1:N, N:N, etc.
 
 Ahora para ver que cumpla con la tercera Forma normal (3NF) primero debemos analizar si cumple con la 1NF:
 
  - LLave primaria en cada una de las tablas
- - No debe haber grupos repetitivos de datos dentro de una misma fila, y todos sis atributos son atomicos. Por ejemplo, un detalle_pedido tiene una cantidad y un precio_total especificos para una linea de pedido, no una lista de productos.
+ - No debe haber grupos repetitivos de datos dentro de una misma fila, y todos sus atributos son atómicos. Por ejemplo, un detalle_pedido tiene una cantidad y un precio_total especificos para una línea de pedido, no una lista de productos.
 
 Con esto se asegura que cumpla con la "1NF" ahora debemos asegurar que cumpla con las "2NF":
 
  - Debe estar en "1NF" y todos los atributos no clave deben depender completamente de la clave primaria.
 
-Y por ultimo requisito para que cumpla con la "3NF":
+Y por último requisito para que cumpla con la "3NF":
 
 - Debe estar en "2NF" y no debe haber dependencias transitivas. (Una dependencia transitiva ocurre cuando un atributo no clave depende de otro atributo no clave, en lugar de depender directamente de la clave primaria.)
 
-En el diagrama que muestro a continucaicon se ve claramente que en todas las tablas, cada atributo no clave depende directamente de la clave primaria de esa tabla, y no de otro atributo no clave dentro de la misma tabla. Por ejemplo, en Productos, nombre, precio, stock dependen directamente de id_producto, no hay ningún atributo que dependa de nombre en lugar de id_producto. Asi cumpliendo con todos los requisitos del enstregable.
+En el diagrama que muestro a continuación se ve claramente que en todas las tablas, cada atributo no clave dependen directamente de la clave primaria de esa tabla, y no de otro atributo no clave dentro de la misma tabla. Por ejemplo, en Productos, nombre, precio, stock dependen directamente de id_producto, no hay ningún atributo que dependa de nombre en lugar de id_producto. Así cumpliendo con todos los requisitos del entregable.
+
 
 ## Diagrama base de datos relacional de tienda online
 ![Diagrama](DiagramaFinalBD.png)
