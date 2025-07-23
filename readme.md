@@ -53,3 +53,62 @@ En el diagrama que muestro a continucaicon se ve claramente que en todas las tab
 
 ## Diagrama base de datos relacional de tienda online
 ![Diagrama](DiagramaFinalBD.png)
+
+## 3. Implementacion de la Base de Datos
+
+Se nos solicito una vez implementado el diagrama, crear la base de datos en un SGBD (MySQL).
+
+##Entregable
+ - Script SQL para creae tablas, incluyendo:
+   - Claves primarias y foraneas.
+   - Restricciones(stock no negativo, unicidad de correos).
+   - Almenos 3 indices para optimizar consultas.
+- Script SQL para poblar la base con datos de prueba.
+  
+## Analisis realizado para cumplir con los criterios de entrega:
+Antes de crear las tablas el SGBD me genero en automatico las siguientes configuraciones iniciales: 
+```SQL
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+```
+- Evita que un campo con AUTO_INCREMENT pueda tener valor 0 automáticamente.
+
+```SQL
+START TRANSACTION;
+```
+- Inicia una transacción (conjunto de operaciones que se ejecutan como una unidad).
+
+
+```SQL
+SET time_zone = "+00:00";
+```
+- Establece la zona horaria en UTC (coordinada universal) para operaciones con fechas.
+
+Una vez terminada las configuraciones iniciales empezamos con la creacion de las tablas necesarias.
+
+## Creacion de la tabla categorias que incluye lo siguiente:
+  - id_categoria: identificador unico de categoria.
+  - nombre_categoria: aqui se coloca el nombre de la categoria
+  - descripcion: aqui se agrega una breve descripcion de la categoria. 
+```SQL
+CREATE TABLE `categorias` (
+  `id_categoria` int(11) NOT NULL,
+  `nombre_categoria` varchar(100) NOT NULL,
+  `descripcion` text NOT NULL
+)
+```
+## Creacion de la tabla  clientes que incluye lo siguiente:
+  - id_clientes: identificador unico de clinetes
+  - nombre_cliente: aqui es donde se coloca el nombre del cliente
+  - correo_electronico: aqui se coloca el correo electronioco del clinete
+  - direccion: aqui se colsoca la direccion del cliente
+  - numero_telefono: aqui se coloca el numero de teledono del cliente
+    
+```SQL
+CREATE TABLE `clientes` (
+  `id_clientes` int(11) NOT NULL,
+  `nombre_cliente` varchar(255) NOT NULL,
+  `correo_electronico` varchar(255) NOT NULL,
+  `direccion` varchar(255) NOT NULL,
+  `numero_telefono` varchar(20) NOT NULL
+)
+```
