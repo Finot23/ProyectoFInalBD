@@ -58,7 +58,7 @@ En el diagrama que muestro a continucaicon se ve claramente que en todas las tab
 
 Se nos solicito una vez implementado el diagrama, crear la base de datos en un SGBD (MySQL).
 
-##Entregable
+## Entregable
  - Script SQL para creae tablas, incluyendo:
    - Claves primarias y foraneas.
    - Restricciones(stock no negativo, unicidad de correos).
@@ -111,4 +111,74 @@ CREATE TABLE `clientes` (
   `direccion` varchar(255) NOT NULL,
   `numero_telefono` varchar(20) NOT NULL
 )
+```
+## Creacion de la tabla detalle_pedido incluye lo siguinete:
+  - id_detalle_pedido: identificador unico de la tabla detalle_pedido
+  -  id_pedido: llave foranea enlasada a la tabla "pedidos"
+  -  id_producto: llave foranea enlasada a la tabla "productos"
+  -  cantidad: aqui se inserta la cantidad productos que hay en el pedido
+  -  precio_total: aqui se inserta el precio final del pedido
+NOTA: Esta tabla tiene un enlace a la tabla "pedidos" y "productos" 
+
+```SQL
+CREATE TABLE `detalle_pedido` (
+  `id_detalle_pedido` int(11) NOT NULL,
+  `id_pedido` int(11) NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `precio_total` decimal(10,2) NOT NULL
+)
+```
+## Creacion de la tabla estado_pedido que incluye lo siguinete:
+  - 
+
+
+
+```SQL
+CREATE TABLE `estado_pedido` (
+  `id_estado_pedido` int(11) NOT NULL,
+  `estado` text NOT NULL
+)
+```
+## Creacion de la tabla pedidos que incluye lo siguinete:
+  - 
+```SQL
+CREATE TABLE `pedidos` (
+  `id_pedido` int(11) NOT NULL,
+  `id_cliente` int(11) NOT NULL,
+  `id_estado_pedido` int(11) NOT NULL,
+  `fecha_pedido` datetime NOT NULL
+)
+```
+## Creacion de la tabla productos
+
+
+```SQL
+CREATE TABLE `productos` (
+  `id_producto` int(11) NOT NULL,
+  `id_categoria` int(11) NOT NULL,
+  `nombre_producto` varchar(255) NOT NULL,
+  `descripcion` text NOT NULL,
+  `precio` decimal(10,2) NOT NULL,
+  `stock` int(11) NOT NULL
+)
+```
+## Creacion de la tabla resenas
+
+
+```SQL
+CREATE TABLE `resenas` (
+  `id_resena` int(11) NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `id_cliente` int(11) NOT NULL,
+  `calificacion` int(11) NOT NULL,
+  `comentario` text NOT NULL,
+  `fecha_resena` datetime NOT NULL
+)
+```
+```
+```
+```
+```
+```
 ```
