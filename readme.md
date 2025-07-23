@@ -1,23 +1,43 @@
-# Proyecto Final de la Clase de Bases de datos en la UAM Cuajimalpa.
- - Creado por Salinas Mata Luis Antonio, alumno de LTSI. 
+# Proyecto Final – Base de Datos para Tienda Online
+**Alumno:** Salinas Mata Luis Antonio  
+**Licenciatura:** Tecnologías y Sistemas de Información – UAM Cuajimalpa
+
+---
 
 ## 1. Descripción del Problema 
-- Se nos pidio la creacion de una tienda online suponiendo que los productos electrónicos necesita un sistema para gestionar sus operaciones, incluyendo productos, clientes, pedidos, reseñas de productos y categorías. 
- 
- * Se solicito que se deberán diseñar e implementar una base de datos relacional con al menos 5 tablas que cumpla con los siguientes requisitos funcionales:
-   
-   - Gestion de Productos.
-   - Gestion de Clientes.
-   - Pedidos.
-   - Resenas.
-   - Categorias
+Se nos pidio la creacion de una tienda online suponiendo que los productos electrónicos necesita un sistema para gestionar sus operaciones incluyendo:
+- productos.
+- clientes.
+- pedidos (con detalles y estado).
+- reseñas de productos.
+- categorías. 
+
+### Requisitos funcionales:
+
+- **Gestión de Productos:** Nombre, descripción, precio, stock (no negativo), categoría.
+- **Gestión de Clientes:** Nombre, correo (único), dirección, número de teléfono.
+- **Pedidos:** Fecha, estado (pendiente, enviado, entregado), productos incluidos.
+- **Reseñas:** Calificación (1–5 estrellas), comentario. Solo por clientes que hayan comprado el producto.
+- **Categorías:** Clasificación de productos (ej. teléfonos, laptops, accesorios).
  
 En mi caso tome la decicion de agregar dos tablas mas las cuales son:
 
  - detalle_pedido
  - estado_pedido
-
+   
 Agregue estas dos tablas ya que considero que de esta manera en el Esquema se cumple con la Tercera Forma Normal(3NF).
+
+### Restricciones clave:
+
+- Máximo 5 pedidos *pendientes* por cliente.
+- El stock de productos no debe ser negativo.
+- Las reseñas solo pueden ser hechas por clientes que compraron el producto.
+
+### Objetivo General:
+
+Diseñar una **base de datos relacional normalizada**, implementar consultas y al menos **8 procedimientos almacenados**, optimizarla con índices y validarla con datos de prueba.
+
+---
 
 ## 2. Requisitos del Proyecto:
 
@@ -118,6 +138,7 @@ CREATE TABLE `clientes` (
   -  id_producto: llave foranea enlasada a la tabla "productos"
   -  cantidad: aqui se inserta la cantidad productos que hay en el pedido
   -  precio_total: aqui se inserta el precio final del pedido
+    
 NOTA: Esta tabla tiene un enlace a la tabla "pedidos" y "productos" 
 
 ```SQL
@@ -130,10 +151,8 @@ CREATE TABLE `detalle_pedido` (
 )
 ```
 ## Creacion de la tabla estado_pedido que incluye lo siguinete:
-  - 
-
-
-
+  - id_estado_pedido: identificador unico de la tabla pedido
+  - estado: aqui contendra el estado del pedido(enviado, cancelado, en proceso)
 ```SQL
 CREATE TABLE `estado_pedido` (
   `id_estado_pedido` int(11) NOT NULL,
@@ -141,7 +160,10 @@ CREATE TABLE `estado_pedido` (
 )
 ```
 ## Creacion de la tabla pedidos que incluye lo siguinete:
-  - 
+  - id_pedido
+  - id_cliente
+  - id_estado_pedido
+  - fecha_pedido
 ```SQL
 CREATE TABLE `pedidos` (
   `id_pedido` int(11) NOT NULL,
@@ -151,7 +173,12 @@ CREATE TABLE `pedidos` (
 )
 ```
 ## Creacion de la tabla productos
-
+  - id_producto
+  - id_categoria
+  - nombre_producto
+  - descripcion
+  - precio
+  - stock
 
 ```SQL
 CREATE TABLE `productos` (
