@@ -1,4 +1,5 @@
-# Proyecto Final de Bases de datos creado por Salinas Mata Luis Antonio para la clase de Bases de datos en la UAM Cuajimalpa.
+# Proyecto Final de la Clase de Bases de datos en la UAM Cuajimalpa.
+ - Creado por Salinas Mata Luis Antonio, alumno de LTSI. 
 
 ## 1. Descripción del Problema Una tienda online de productos electrónicos necesita un sistema para gestionar sus 
 operaciones, incluyendo productos, clientes, pedidos, reseñas de productos y categorías. 
