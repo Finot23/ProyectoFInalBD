@@ -60,7 +60,7 @@ Para cumplir con el modelo Entidad-Relación (ER) tenemos que tomar en cuenta lo
 Ahora para ver que cumpla con la tercera Forma normal (3NF) primero debemos analizar si cumple con la 1NF:
 
  - LLave primaria en cada una de las tablas
- - No debe haber grupos repetitivos de datos dentro de una misma fila, y todos sus atributos son atómicos. Por ejemplo, un detalle_pedido tiene una cantidad y un precio_total especificos para una línea de pedido, no una lista de productos.
+ - No debe haber grupos repetitivos de datos dentro de una misma fila, y todos sus atributos son atómicos. Por ejemplo, un detalle_pedido tiene una cantidad y un "precio_total" especificos para una línea de pedido, no una lista de productos.
 
 Con esto se asegura que cumpla con la "1NF" ahora debemos asegurar que cumpla con las "2NF":
 
@@ -70,25 +70,24 @@ Y por último requisito para que cumpla con la "3NF":
 
 - Debe estar en "2NF" y no debe haber dependencias transitivas. (Una dependencia transitiva ocurre cuando un atributo no clave depende de otro atributo no clave, en lugar de depender directamente de la clave primaria.)
 
-En el diagrama que muestro a continuación se ve claramente que en todas las tablas, cada atributo no clave dependen directamente de la clave primaria de esa tabla, y no de otro atributo no clave dentro de la misma tabla. Por ejemplo, en Productos, nombre, precio, stock dependen directamente de id_producto, no hay ningún atributo que dependa de nombre en lugar de id_producto. Así cumpliendo con todos los requisitos del entregable.
+En el diagrama que muestro a continuación se ve claramente que en todas las tablas, cada atributo no clave dependen directamente de la clave primaria de esa tabla, y no de otro atributo no clave dentro de la misma tabla. Por ejemplo, en Productos, nombre, precio, stock dependen directamente de "id_producto", no hay ningún atributo que dependa de nombre en lugar de "id_producto". Así cumpliendo con todos los requisitos del entregable.
 
 
 ## Diagrama base de datos relacional de tienda online
 ![Diagrama](DiagramaFinalBD.png)
 
+---
+
 ## 3. Implementacion de la Base de Datos
 
-Se nos solicito una vez implementado el diagrama, crear la base de datos en un SGBD (MySQL).
+Se utilizó **MySQL** como SGBD.
 
-## Entregable
- - Script SQL para creae tablas, incluyendo:
-   - Claves primarias y foraneas.
-   - Restricciones(stock no negativo, unicidad de correos).
-   - Almenos 3 indices para optimizar consultas.
-- Script SQL para poblar la base con datos de prueba.
+### Entregables:
+- Script SQL para crear tablas, claves y restricciones.
+- Al menos 3 índices (productos por nombre, por categoría, pedidos por cliente).
+- Script SQL para insertar datos de prueba.
   
-## Analisis realizado para cumplir con los criterios de entrega:
-Antes de crear las tablas el SGBD me genero en automatico las siguientes configuraciones iniciales: 
+### Configuración Inicial Generada Automáticamente:
 ```SQL
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 ```
@@ -98,19 +97,19 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 ```
 - Inicia una transacción (conjunto de operaciones que se ejecutan como una unidad).
-
-
 ```SQL
 SET time_zone = "+00:00";
 ```
 - Establece la zona horaria en UTC (coordinada universal) para operaciones con fechas.
 
-Una vez terminada las configuraciones iniciales empezamos con la creacion de las tablas necesarias.
+Una vez terminadas las configuraciones iniciales empezamos con la creación de las tablas necesarias.
 
-## Creacion de la tabla categorias que incluye lo siguiente:
-  - id_categoria: identificador unico de categoria.
-  - nombre_categoria: aqui se coloca el nombre de la categoria
-  - descripcion: aqui se agrega una breve descripcion de la categoria. 
+### Tablas:
+
+## Creación de la tabla categorías que incluye lo siguiente:
+  - id_categoria: identificador único de categoría.
+  - nombre_categoria: aquí se coloca el nombre de la categoría
+  - descripcion: aquí se agrega una breve descripción de la categoría. 
 ```SQL
 CREATE TABLE `categorias` (
   `id_categoria` int(11) NOT NULL,
@@ -118,13 +117,12 @@ CREATE TABLE `categorias` (
   `descripcion` text NOT NULL
 )
 ```
-## Creacion de la tabla  clientes que incluye lo siguiente:
-  - id_clientes: identificador unico de clinetes
-  - nombre_cliente: aqui es donde se coloca el nombre del cliente
-  - correo_electronico: aqui se coloca el correo electronioco del clinete
-  - direccion: aqui se colsoca la direccion del cliente
-  - numero_telefono: aqui se coloca el numero de teledono del cliente
-    
+## Creación de la tabla  clientes que incluye lo siguiente:
+  - id_clientes: identificador único de clientes.
+  - nombre_cliente: aquí es donde se coloca el nombre del cliente.
+  - correo_electronico: aquí se coloca el correo electrónico del cliente.
+  - direccion: aqui se coloca la dirección del cliente.
+  - numero_telefono: aquí se coloca el número de teléfono del cliente.  
 ```SQL
 CREATE TABLE `clientes` (
   `id_clientes` int(11) NOT NULL,
@@ -134,15 +132,14 @@ CREATE TABLE `clientes` (
   `numero_telefono` varchar(20) NOT NULL
 )
 ```
-## Creacion de la tabla detalle_pedido incluye lo siguinete:
-  - id_detalle_pedido: identificador unico de la tabla detalle_pedido
-  -  id_pedido: llave foranea enlasada a la tabla "pedidos"
-  -  id_producto: llave foranea enlasada a la tabla "productos"
-  -  cantidad: aqui se inserta la cantidad productos que hay en el pedido
-  -  precio_total: aqui se inserta el precio final del pedido
+## Creación de la tabla “detalle_pedido” incluye lo siguiente:
+  - id_detalle_pedido: identificador único de la tabla “detalle_pedido”.
+  -  id_pedido: llave foránea enlazada a la tabla "pedidos".
+  -  id_producto: llave foranea enlazada a la tabla "productos".
+  -  cantidad: aquí se inserta la cantidad productos que hay en el pedido.
+  -  precio_total: aquí se inserta el precio final del pedido.
     
 NOTA: Esta tabla tiene un enlace a la tabla "pedidos" y "productos" 
-
 ```SQL
 CREATE TABLE `detalle_pedido` (
   `id_detalle_pedido` int(11) NOT NULL,
@@ -152,20 +149,20 @@ CREATE TABLE `detalle_pedido` (
   `precio_total` decimal(10,2) NOT NULL
 )
 ```
-## Creacion de la tabla estado_pedido que incluye lo siguinete:
-  - id_estado_pedido: identificador unico de la tabla pedido
-  - estado: aqui contendra el estado del pedido(enviado, cancelado, en proceso)
+## Creación de la tabla estado_pedido que incluye lo siguiente:
+  - id_estado_pedido: identificador único de la tabla pedido.
+  - estado: aquí contendrá el estado del pedido(enviado, cancelado, en proceso).
 ```SQL
 CREATE TABLE `estado_pedido` (
   `id_estado_pedido` int(11) NOT NULL,
   `estado` text NOT NULL
 )
 ```
-## Creacion de la tabla pedidos que incluye lo siguinete:
-  - id_pedido
-  - id_cliente
-  - id_estado_pedido
-  - fecha_pedido
+## Creación de la tabla pedidos que incluye lo siguiente:
+  - id_pedido: identificador único de la tabla pedidos.
+  - id_cliente: llave foránea enlazada a la tabla "clinetes".
+  - id_estado_pedido: llave foránea enlazada a la tabla "estado_pedido".
+  - fecha_pedido: aquí se guardará la fecha del pedido.
 ```SQL
 CREATE TABLE `pedidos` (
   `id_pedido` int(11) NOT NULL,
@@ -174,14 +171,13 @@ CREATE TABLE `pedidos` (
   `fecha_pedido` datetime NOT NULL
 )
 ```
-## Creacion de la tabla productos
-  - id_producto
-  - id_categoria
-  - nombre_producto
-  - descripcion
-  - precio
-  - stock
-
+## Creación de la tabla productos
+  - id_producto: identificador único de la tabla productos.
+  - id_categoria: llave foránea enlazada a la tabla "categorias".
+  - nombre_producto: aquí se colocará el nombre del producto.
+  - descripcion: aquí se colocara una breve descripción del producto.
+  - precio: aquí se colocará el precio del producto.
+  - stock: aquí se colocará el stock disponible del producto.
 ```SQL
 CREATE TABLE `productos` (
   `id_producto` int(11) NOT NULL,
@@ -192,9 +188,13 @@ CREATE TABLE `productos` (
   `stock` int(11) NOT NULL
 )
 ```
-## Creacion de la tabla resenas
-
-
+## Creación de la tabla resenas
+  - id_resena: identificador único de la tabla resena.
+  - id_producto: llave foránea enlazada a la tabla "productos".
+  - id_cliente: llave foránea enlazada a la tabla "cliente".
+  - calificacion: aqui se le colocara la reseña con calificacion del 1 al 5.
+  - comentario: aquí se dejará un breve comentario para la reseña.
+  - fecha_resena: aquí se colocara la fecha de cuando se realizó la reseña.
 ```SQL
 CREATE TABLE `resenas` (
   `id_resena` int(11) NOT NULL,
@@ -204,10 +204,4 @@ CREATE TABLE `resenas` (
   `comentario` text NOT NULL,
   `fecha_resena` datetime NOT NULL
 )
-```
-```
-```
-```
-```
-```
 ```
