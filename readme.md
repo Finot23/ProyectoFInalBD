@@ -127,7 +127,7 @@ CREATE TABLE `categorias` (
 CREATE TABLE `clientes` (
   `id_clientes` int(11) NOT NULL,
   `nombre_cliente` varchar(255) NOT NULL,
-  `correo_electronico` varchar(255) NOT NULL,
+  `correo_electronico` varchar(255) NOT NULL UNIQUE,
   `direccion` varchar(255) NOT NULL,
   `numero_telefono` varchar(20) NOT NULL
 )
@@ -160,7 +160,7 @@ CREATE TABLE `estado_pedido` (
 ```
 ## Creación de la tabla pedidos que incluye lo siguiente:
   - id_pedido: identificador único de la tabla pedidos.
-  - id_cliente: llave foránea enlazada a la tabla "clinetes".
+  - id_cliente: llave foránea enlazada a la tabla "clientes".
   - id_estado_pedido: llave foránea enlazada a la tabla "estado_pedido".
   - fecha_pedido: aquí se guardará la fecha del pedido.
 ```SQL
@@ -282,3 +282,36 @@ ALTER TABLE `productos`
 ALTER TABLE `resenas`
   MODIFY `id_resena` int(11) NOT NULL AUTO_INCREMENT;
 ```
+## Restriccones (FOREING KEYS)
+Por ultimo tenemos que designar las **FOREING KEYS** para cada una de las tablas, igualmente a cada uno se le agrega un **ON UPDATE CASCADE** para que si cambia el ID en la tabla referida, se actualiza automáticamente en esta tabla.
+
+```SQL
+ALTER TABLE `detalle_pedido`
+  ADD CONSTRAINT `detalle_pedido_ibfk_1` FOREIGN KEY (`id_pedido`) REFERENCES `pedidos` (`id_pedido`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `detalle_pedido_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`) ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `pedidos`
+--
+ALTER TABLE `pedidos`
+  ADD CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_clientes`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `pedidos_ibfk_2` FOREIGN KEY (`id_estado_pedido`) REFERENCES `estado_pedido` (`id_estado_pedido`) ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `productos`
+--
+ALTER TABLE `productos`
+  ADD CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categorias` (`id_categoria`) ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `resenas`
+--
+ALTER TABLE `resenas`
+  ADD CONSTRAINT `resenas_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `resenas_ibfk_2` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_clientes`) ON UPDATE CASCADE;
+```
+Y realizamos **COMMIT;** para asegurar que se apliquen definitivamente todos los cambios a la base de datos.
+```SQL
+COMMIT;
+```
+
