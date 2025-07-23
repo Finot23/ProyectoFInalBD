@@ -49,5 +49,6 @@ Y por ultimo requisito para que cumpla con la "3NF":
 
 - Debe estar en "2NF" y no debe haber dependencias transitivas. (Una dependencia transitiva ocurre cuando un atributo no clave depende de otro atributo no clave, en lugar de depender directamente de la clave primaria.)
 
-En el diagrama que muestro a continucaicon se ve claramente que en todas las tablas, cada atributo no clave depende directamente de la clave primaria de esa tabla, y no de otro atributo no clave dentro de la misma tabla. Por ejemplo, en Productos, nombre, precio, stock dependen directamente de id_producto, no hay ningún atributo que dependa de nombre en lugar de id_producto. Asi cumpliendo con todos los Rquisitos del enstregable.
- # AQUI ES DONDE VA LA IMAGEN DE MI DIAGRAMA .PNG
+En el diagrama que muestro a continucaicon se ve claramente que en todas las tablas, cada atributo no clave depende directamente de la clave primaria de esa tabla, y no de otro atributo no clave dentro de la misma tabla. Por ejemplo, en Productos, nombre, precio, stock dependen directamente de id_producto, no hay ningún atributo que dependa de nombre en lugar de id_producto. Asi cumpliendo con todos los requisitos del enstregable.
+
+![Diagrama]([ruta/a/la/imagen.jpg](https://github.com/Finot23/ProyectoFInalBD/blob/main/DiagramaFinalBD.png))
