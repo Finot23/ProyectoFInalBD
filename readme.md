@@ -205,3 +205,80 @@ CREATE TABLE `resenas` (
   `fecha_resena` datetime NOT NULL
 )
 ```
+## Índices y Claves Primarias
+Una vez creadas las tablas hay que designar los Índices y Claves Primarias de cada tabla: 
+
+```SQL
+ALTER TABLE `categorias`
+  ADD PRIMARY KEY (`id_categoria`);
+
+ALTER TABLE `clientes`
+  ADD PRIMARY KEY (`id_clientes`);
+
+ALTER TABLE `detalle_pedido`
+  ADD PRIMARY KEY (`id_detalle_pedido`),
+  ADD KEY `id_pedido` (`id_pedido`),
+  ADD KEY `id_producto` (`id_producto`);
+
+ALTER TABLE `estado_pedido`
+  ADD PRIMARY KEY (`id_estado_pedido`);
+
+ALTER TABLE `pedidos`
+  ADD PRIMARY KEY (`id_pedido`),
+  ADD KEY `id_cliente` (`id_cliente`),
+  ADD KEY `id_estado_pedido` (`id_estado_pedido`);
+
+ALTER TABLE `productos`
+  ADD PRIMARY KEY (`id_producto`),
+  ADD KEY `id_categoria` (`id_categoria`);
+
+ALTER TABLE `resenas`
+  ADD PRIMARY KEY (`id_resena`),
+  ADD KEY `id_producto` (`id_producto`),
+  ADD KEY `id_cliente` (`id_cliente`);
+```
+## AUTO_INCREMENT
+Una vez designados los Índices y Claves Primarias tenemos que darle el parametro de **AUTO_INCREMENT** a cada Clave Primaria:
+```SQL
+--
+-- AUTO_INCREMENT de la tabla `categorias`
+--
+ALTER TABLE `categorias`
+  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `clientes`
+--
+ALTER TABLE `clientes`
+  MODIFY `id_clientes` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `detalle_pedido`
+--
+ALTER TABLE `detalle_pedido`
+  MODIFY `id_detalle_pedido` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `estado_pedido`
+--
+ALTER TABLE `estado_pedido`
+  MODIFY `id_estado_pedido` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `pedidos`
+--
+ALTER TABLE `pedidos`
+  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `productos`
+--
+ALTER TABLE `productos`
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `resenas`
+--
+ALTER TABLE `resenas`
+  MODIFY `id_resena` int(11) NOT NULL AUTO_INCREMENT;
+```
