@@ -16,14 +16,14 @@ Se nos pidio la creacion de una tienda online suponiendo que los productos elect
 
 - **Gestión de Productos:** Nombre, descripción, precio, stock (no negativo), categoría.
 - **Gestión de Clientes:** Nombre, correo (único), dirección, número de teléfono.
-- **Pedidos:** Fecha, estado (pendiente, enviado, entregado), productos incluidos.
+- **Pedidos:** Fecha, productos incluidos.
 - **Reseñas:** Calificación (1–5 estrellas), comentario. Solo por clientes que hayan comprado el producto.
 - **Categorías:** Clasificación de productos (ej. teléfonos, laptops, accesorios).
  
 En mi caso tome la decicion de agregar dos tablas mas las cuales son:
 
- - detalle_pedido
- - estado_pedido
+ - **detalle_pedido:** cantidad productos, precio total. 
+ - **estado_pedido:** estado (pendiente, enviado, entregado)
    
 Agregue estas dos tablas ya que considero que de esta manera en el Esquema se cumple con la Tercera Forma Normal(3NF).
 
