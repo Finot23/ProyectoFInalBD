@@ -51,4 +51,5 @@ Y por ultimo requisito para que cumpla con la "3NF":
 
 En el diagrama que muestro a continucaicon se ve claramente que en todas las tablas, cada atributo no clave depende directamente de la clave primaria de esa tabla, y no de otro atributo no clave dentro de la misma tabla. Por ejemplo, en Productos, nombre, precio, stock dependen directamente de id_producto, no hay ningún atributo que dependa de nombre en lugar de id_producto. Asi cumpliendo con todos los requisitos del enstregable.
 
+##Diagrama base de datos relacional de tienda online
 ![Diagrama](DiagramaFinalBD.png)
