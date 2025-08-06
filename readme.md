@@ -93,15 +93,6 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 ```
 - Evita que un campo con AUTO_INCREMENT pueda tener valor 0 automáticamente.
 
-```SQL
-START TRANSACTION;
-```
-- Inicia una transacción (conjunto de operaciones que se ejecutan como una unidad).
-```SQL
-SET time_zone = "+00:00";
-```
-- Establece la zona horaria en UTC (coordinada universal) para operaciones con fechas.
-
 Una vez terminadas las configuraciones iniciales empezamos con la creación de las tablas necesarias.
 
 ### Tablas:
