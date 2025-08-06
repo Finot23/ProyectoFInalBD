@@ -102,11 +102,12 @@ Una vez terminadas las configuraciones iniciales empezamos con la creación de l
   - nombre_categoria: aquí se coloca el nombre de la categoría
   - descripcion: aquí se agrega una breve descripción de la categoría. 
 ```SQL
-CREATE TABLE `categorias` (
-  `id_categoria` int(11) NOT NULL,
-  `nombre_categoria` varchar(100) NOT NULL,
-  `descripcion` text NOT NULL
-)
+CREATE TABLE categorias (
+  id_categoria int(11) NOT NULL AUTO_INCREMENT,
+  nombre_categoria varchar(100) NOT NULL,
+  descripcion text NOT NULL,
+  PRIMARY KEY (id_categoria)
+);
 ```
 ## Creación de la tabla  clientes que incluye lo siguiente:
   - id_clientes: identificador único de clientes.
@@ -115,13 +116,14 @@ CREATE TABLE `categorias` (
   - direccion: aqui se coloca la dirección del cliente.
   - numero_telefono: aquí se coloca el número de teléfono del cliente.  
 ```SQL
-CREATE TABLE `clientes` (
-  `id_clientes` int(11) NOT NULL,
-  `nombre_cliente` varchar(255) NOT NULL,
-  `correo_electronico` varchar(255) NOT NULL UNIQUE,
-  `direccion` varchar(255) NOT NULL,
-  `numero_telefono` varchar(20) NOT NULL
-)
+CREATE TABLE clientes (
+  id_clientes int(11) NOT NULL AUTO_INCREMENT,
+  nombre_cliente varchar(255) NOT NULL,
+  correo_electronico varchar(255) NOT NULL UNIQUE,
+  direccion varchar(255) NOT NULL,
+  numero_telefono varchar(20) NOT NULL,
+  PRIMARY KEY (id_clientes)
+);
 ```
 ## Creación de la tabla “detalle_pedido” incluye lo siguiente:
   - id_detalle_pedido: identificador único de la tabla “detalle_pedido”.
@@ -132,22 +134,28 @@ CREATE TABLE `clientes` (
     
 NOTA: Esta tabla tiene un enlace a la tabla "pedidos" y "productos" 
 ```SQL
-CREATE TABLE `detalle_pedido` (
-  `id_detalle_pedido` int(11) NOT NULL,
-  `id_pedido` int(11) NOT NULL,
-  `id_producto` int(11) NOT NULL,
-  `cantidad` int(11) NOT NULL,
-  `precio_total` decimal(10,2) NOT NULL
-)
+CREATE TABLE detalle_pedido (
+  id_detalle_pedido int(11) NOT NULL AUTO_INCREMENT,
+  id_pedido int(11) NOT NULL,
+  id_producto int(11) NOT NULL,
+  cantidad int(11) NOT NULL,
+  precio_total decimal(10,2) NOT NULL,
+  PRIMARY KEY (id_detalle_pedido),
+  KEY fk_detalle_pedido_pedido (id_pedido),
+  KEY fk_detalle_pedido_producto (id_producto),
+  CONSTRAINT fk_detalle_pedido_pedido FOREIGN KEY (id_pedido) REFERENCES pedidos (id_pedido) ON UPDATE CASCADE,
+  CONSTRAINT fk_detalle_pedido_producto FOREIGN KEY (id_producto) REFERENCES productos (id_producto) ON UPDATE CASCADE
+);
 ```
 ## Creación de la tabla estado_pedido que incluye lo siguiente:
   - id_estado_pedido: identificador único de la tabla pedido.
   - estado: aquí contendrá el estado del pedido(enviado, cancelado, en proceso).
 ```SQL
-CREATE TABLE `estado_pedido` (
-  `id_estado_pedido` int(11) NOT NULL,
-  `estado` text NOT NULL
-)
+CREATE TABLE estado_pedido (
+  id_estado_pedido int(11) NOT NULL AUTO_INCREMENT,
+  estado varchar(50) NOT NULL,
+  PRIMARY KEY (id_estado_pedido)
+);
 ```
 ## Creación de la tabla pedidos que incluye lo siguiente:
   - id_pedido: identificador único de la tabla pedidos.
@@ -155,12 +163,17 @@ CREATE TABLE `estado_pedido` (
   - id_estado_pedido: llave foránea enlazada a la tabla "estado_pedido".
   - fecha_pedido: aquí se guardará la fecha del pedido.
 ```SQL
-CREATE TABLE `pedidos` (
-  `id_pedido` int(11) NOT NULL,
-  `id_cliente` int(11) NOT NULL,
-  `id_estado_pedido` int(11) NOT NULL,
-  `fecha_pedido` datetime NOT NULL
-)
+CREATE TABLE pedidos (
+  id_pedido int(11) NOT NULL AUTO_INCREMENT,
+  id_cliente int(11) NOT NULL,
+  id_estado_pedido int(11) NOT NULL,
+  fecha_pedido datetime NOT NULL,
+  PRIMARY KEY (id_pedido),
+  KEY fk_pedidos_clientes (id_cliente),
+  KEY fk_pedidos_estado (id_estado_pedido),
+  CONSTRAINT fk_pedidos_clientes FOREIGN KEY (id_cliente) REFERENCES clientes (id_clientes) ON UPDATE CASCADE,
+  CONSTRAINT fk_pedidos_estado FOREIGN KEY (id_estado_pedido) REFERENCES estado_pedido (id_estado_pedido) ON UPDATE CASCADE
+);
 ```
 ## Creación de la tabla productos
   - id_producto: identificador único de la tabla productos.
@@ -170,14 +183,17 @@ CREATE TABLE `pedidos` (
   - precio: aquí se colocará el precio del producto.
   - stock: aquí se colocará el stock disponible del producto.
 ```SQL
-CREATE TABLE `productos` (
-  `id_producto` int(11) NOT NULL,
-  `id_categoria` int(11) NOT NULL,
-  `nombre_producto` varchar(255) NOT NULL,
-  `descripcion` text NOT NULL,
-  `precio` decimal(10,2) NOT NULL,
-  `stock` int(11) NOT NULL
-)
+CREATE TABLE productos (
+  id_producto int(11) NOT NULL AUTO_INCREMENT,
+  id_categoria int(11) NOT NULL,
+  nombre_producto varchar(255) NOT NULL,
+  descripcion text NOT NULL,
+  precio decimal(10,2) NOT NULL,
+  stock int(11) NOT NULL,
+  PRIMARY KEY (id_producto),
+  KEY fk_productos_categorias (id_categoria),
+  CONSTRAINT fk_productos_categorias FOREIGN KEY (id_categoria) REFERENCES categorias (id_categoria) ON UPDATE CASCADE
+);
 ```
 ## Creación de la tabla resenas
   - id_resena: identificador único de la tabla resena.
@@ -187,124 +203,22 @@ CREATE TABLE `productos` (
   - comentario: aquí se dejará un breve comentario para la reseña.
   - fecha_resena: aquí se colocara la fecha de cuando se realizó la reseña.
 ```SQL
-CREATE TABLE `resenas` (
-  `id_resena` int(11) NOT NULL,
-  `id_producto` int(11) NOT NULL,
-  `id_cliente` int(11) NOT NULL,
-  `calificacion` int(11) NOT NULL,
-  `comentario` text NOT NULL,
-  `fecha_resena` datetime NOT NULL
-)
+CREATE TABLE resenas (
+  id_resena int(11) NOT NULL AUTO_INCREMENT,
+  id_producto int(11) NOT NULL,
+  id_cliente int(11) NOT NULL,
+  calificacion int(11) NOT NULL,
+  comentario text NOT NULL,
+  fecha_resena datetime NOT NULL,
+  PRIMARY KEY (id_resena),
+  KEY fk_resenas_producto (id_producto),
+  KEY fk_resenas_cliente (id_cliente),
+  CONSTRAINT fk_resenas_producto FOREIGN KEY (id_producto) REFERENCES productos (id_producto) ON UPDATE CASCADE,
+  CONSTRAINT fk_resenas_cliente FOREIGN KEY (id_cliente) REFERENCES clientes (id_clientes) ON UPDATE CASCADE
+);
+
 ```
-## Índices y Claves Primarias
-Una vez creadas las tablas hay que designar los Índices y Claves Primarias de cada tabla: 
 
-```SQL
-ALTER TABLE `categorias`
-  ADD PRIMARY KEY (`id_categoria`);
-
-ALTER TABLE `clientes`
-  ADD PRIMARY KEY (`id_clientes`);
-
-ALTER TABLE `detalle_pedido`
-  ADD PRIMARY KEY (`id_detalle_pedido`),
-  ADD KEY `id_pedido` (`id_pedido`),
-  ADD KEY `id_producto` (`id_producto`);
-
-ALTER TABLE `estado_pedido`
-  ADD PRIMARY KEY (`id_estado_pedido`);
-
-ALTER TABLE `pedidos`
-  ADD PRIMARY KEY (`id_pedido`),
-  ADD KEY `id_cliente` (`id_cliente`),
-  ADD KEY `id_estado_pedido` (`id_estado_pedido`);
-
-ALTER TABLE `productos`
-  ADD PRIMARY KEY (`id_producto`),
-  ADD KEY `id_categoria` (`id_categoria`);
-
-ALTER TABLE `resenas`
-  ADD PRIMARY KEY (`id_resena`),
-  ADD KEY `id_producto` (`id_producto`),
-  ADD KEY `id_cliente` (`id_cliente`);
-```
-## AUTO_INCREMENT
-Una vez designados los Índices y Claves Primarias tenemos que darle el parametro de **AUTO_INCREMENT** a cada Clave Primaria:
-```SQL
---
--- AUTO_INCREMENT de la tabla `categorias`
---
-ALTER TABLE `categorias`
-  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `clientes`
---
-ALTER TABLE `clientes`
-  MODIFY `id_clientes` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `detalle_pedido`
---
-ALTER TABLE `detalle_pedido`
-  MODIFY `id_detalle_pedido` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `estado_pedido`
---
-ALTER TABLE `estado_pedido`
-  MODIFY `id_estado_pedido` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `pedidos`
---
-ALTER TABLE `pedidos`
-  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `productos`
---
-ALTER TABLE `productos`
-  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `resenas`
---
-ALTER TABLE `resenas`
-  MODIFY `id_resena` int(11) NOT NULL AUTO_INCREMENT;
-```
-## Restriccones (FOREING KEYS)
-Por ultimo tenemos que designar las **FOREING KEYS** para cada una de las tablas, igualmente a cada uno se le agrega un **ON UPDATE CASCADE** para que si cambia el ID en la tabla referida, se actualiza automáticamente en esta tabla.
-
-```SQL
-ALTER TABLE `detalle_pedido`
-  ADD CONSTRAINT `detalle_pedido_ibfk_1` FOREIGN KEY (`id_pedido`) REFERENCES `pedidos` (`id_pedido`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `detalle_pedido_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`) ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `pedidos`
---
-ALTER TABLE `pedidos`
-  ADD CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_clientes`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `pedidos_ibfk_2` FOREIGN KEY (`id_estado_pedido`) REFERENCES `estado_pedido` (`id_estado_pedido`) ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `productos`
---
-ALTER TABLE `productos`
-  ADD CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categorias` (`id_categoria`) ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `resenas`
---
-ALTER TABLE `resenas`
-  ADD CONSTRAINT `resenas_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `resenas_ibfk_2` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_clientes`) ON UPDATE CASCADE;
-```
-Y realizamos **COMMIT;** para asegurar que se apliquen definitivamente todos los cambios a la base de datos.
-```SQL
-COMMIT;
-```
 ## Generar datos para poblar las tablas:
 A continuacion dejo el script utilizado para poblar las tablas:
 
